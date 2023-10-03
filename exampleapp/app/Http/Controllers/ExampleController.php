@@ -12,7 +12,6 @@ class ExampleController extends Controller
         $animals = ['Meowsalot', 'Barksalot', 'Purrsloud'];
         return view('homepage', ['name' => $ourName, 'catname' => 'Mewosalot', 'allAnimals' => $animals]);
     }
-
     public function aboutpage()
     {
         return view('single-page');

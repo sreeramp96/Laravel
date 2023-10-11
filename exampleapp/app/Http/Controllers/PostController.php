@@ -25,4 +25,9 @@ class PostController extends Controller
 
         Posts::create($incomingFields);
     }
+
+    public function viewSinglePost(Posts $post)
+    {
+        return view('single-page', ['post' => $post]);
+    }
 }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Posts;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -30,6 +31,7 @@ class PostController extends Controller
 
     public function viewSinglePost(Posts $post)
     {
+        $post['body'] = Str::markdown($post->body);
         return view('single-page', ['post' => $post]);
     }
 }

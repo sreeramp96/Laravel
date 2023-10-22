@@ -10,6 +10,9 @@ class PostController extends Controller
 {
     public function showCreateForm()
     {
+        if (!auth()->check()) {
+            return redirect('/');
+        }
         return view('create-post');
     }
 
@@ -31,7 +34,8 @@ class PostController extends Controller
 
     public function viewSinglePost(Posts $post)
     {
-        $post['body'] = Str::markdown($post->body);
+        $post['body'] = strip_tags(Str::markdown($post->body), '<p><ul><li><strong><em><h3><br>');
         return view('single-page', ['post' => $post]);
     }
+
 }

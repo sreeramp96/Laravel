@@ -35,7 +35,7 @@ class PostPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Posts $post): bool
+    public function update(User $user, Posts $post)
     {
         // 
         return $user->id === $post->user_id;
@@ -44,7 +44,7 @@ class PostPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Posts $post): bool
+    public function delete(User $user, Posts $post)
     {
         //
         return $user->id === $post->user_id;

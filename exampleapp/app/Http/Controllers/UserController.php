@@ -42,7 +42,7 @@ class UserController extends Controller
     public function showCorrectHomepage()
     {
         if (auth()->check()) {
-            return view('homepage-feed');
+            return view('homepage-feed', ['posts' => auth()->user()->feedPosts()->latest()->paginate(3)]);
         } else {
             return view('homepage');
         }
@@ -89,13 +89,13 @@ class UserController extends Controller
     public function profileFollowers(Request $request, User $user)
     {
         $this->getSharedData($user);
-        return view('profile-following', ['posts' => $user->posts()->latest()->get()]);
+        return view('profile-followers', ['followers' => $user->followers()->latest()->get()]);
     }
 
     public function profileFollowing(Request $request, User $user)
     {
         $this->getSharedData($user);
-        return view('profile-following', ['posts' => $user->posts()->latest()->get()]);
+        return view('profile-following', ['following' => $user->followingTheseUsers()->latest()->get()]);
     }
 
     private function getSharedData($user)
@@ -105,6 +105,6 @@ class UserController extends Controller
             $currentlyFollowing = Follow::where([['user_id', '=', auth()->user()->id], ['followeduser', '=', $user->id]])->count();
         }
 
-        View::share('sharedData', ['currentlyFollowing' => $currentlyFollowing, 'avatar' => $user->avatar, 'username' => $user->username, 'postCount' => $user->posts()->count()]);
+        View::share('sharedData', ['currentlyFollowing' => $currentlyFollowing, 'avatar' => $user->avatar, 'username' => $user->username, 'postCount' => $user->posts()->count(), 'followerCount' => $user->followers()->count(), 'followingCount' => $user->followingTheseUsers()->count()]);
     }
 }

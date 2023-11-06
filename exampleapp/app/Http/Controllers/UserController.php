@@ -112,4 +112,19 @@ class UserController extends Controller
         View::share('sharedData', ['currentlyFollowing' => $currentlyFollowing, 'avatar' => $user->avatar, 'username' => $user->username, 'postCount' => $user->posts()->count(), 'followerCount' => $user->followers()->count(), 'followingCount' => $user->followingTheseUsers()->count()]);
 
     }
+
+    public function profileRaw(User $user)
+    {
+        return response()->json(['theHTML' => view('profile-posts-only', ['posts' => $user->posts()->latest()->get()])->render(), 'docTitle' => $user->username . "'s Profile"]);
+    }
+
+    public function profileFollowersRaw(Request $request, User $user)
+    {
+        return response()->json(['theHTML' => view('profile-followers-only', ['followers' => $user->followers()->latest()->get()])->render(), 'docTitle' => $user->username . "'s Followers"]);
+    }
+
+    public function profileFollowingRaw(Request $request, User $user)
+    {
+        return response()->json(['theHTML' => view('profile-following-only', ['following' => $user->followers()->latest()->get()])->render(), 'docTitle' => $user->username . "'s Followers"]);
+    }
 }

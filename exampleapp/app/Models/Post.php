@@ -8,7 +8,7 @@ use Laravel\Scout\Searchable;
 
 class Post extends Model
 {
-    use Searchable;
+    // use Searchable;
     use HasFactory;
     protected $fillable = ['title', 'body', 'user_id'];
 
@@ -17,7 +17,8 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function tooSearchableArray(){
+    public function tooSearchableArray()
+    {
         return [
             'title' => $this->title,
             'body' => $this->body

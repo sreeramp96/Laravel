@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\OurExampleEvent;
+use App\Models\Post;
 use App\Models\User;
 use App\Models\Follow;
+use Cache;
 use Illuminate\Http\Request;
+use App\Events\OurExampleEvent;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
@@ -24,6 +26,22 @@ class UserController extends Controller
         $user = User::create($incomingFields);
         auth()->login($user);
         return redirect('/')->with('success', 'Thank you for creating an account.');
+    }
+
+    public function loginApi(Request $request)
+    {
+        $incomingFields = $request->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        if (auth()->attempt($incomingFields)) {
+            $user = User::where('username', $incomingFields['username'])->first();
+            $token = $user->createToken('ourapptoken')->plainTextToken;
+            return $token;
+        }
+
+        return '';
     }
     public function login(Request $request)
     {
@@ -47,7 +65,18 @@ class UserController extends Controller
         if (auth()->check()) {
             return view('homepage-feed', ['posts' => auth()->user()->feedPosts()->latest()->paginate(3)]);
         } else {
-            return view('homepage');
+            // if (Cache::has('postCount')) {
+            //     $postCount = Cache::get('postCount');
+            // } else {
+            //     sleep(5);
+            //     $postCount = Post::count();
+            //     Cache::put('postCount', $postCount, 20);
+            // }
+            $postCount = Cache::remember('postCount', 20, function () {
+                sleep(5);
+                return Post::count();
+            });
+            return view('homepage', ['postCount' => $postCount]);
         }
     }
 
@@ -72,7 +101,7 @@ class UserController extends Controller
     public function storeAvatar(Request $request)
     {
         $request->validate([
-            'avatar' => 'required|image|max:100000 ',
+            'avatar' => 'required|image|max:1000000',
         ]);
         $user = auth()->user();
         $filename = $user->id . '-' . uniqid() . '.jpg';
@@ -89,7 +118,7 @@ class UserController extends Controller
         return back()->with("success", "Congrats on the new avatar");
 
     }
-
+    
     public function profileFollowers(Request $request, User $user)
     {
         $this->getSharedData($user);

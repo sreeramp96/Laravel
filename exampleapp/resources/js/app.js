@@ -14,5 +14,3 @@ if (document.querySelector(".header-chat-icon")) {
 if (document.querySelector(".profile-nav")) {
     new Profile();
 }
-
-

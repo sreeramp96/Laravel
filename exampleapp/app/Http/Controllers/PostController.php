@@ -6,7 +6,6 @@ use App\Models\Post;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Jobs\SendNewPostEmail;
-use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {

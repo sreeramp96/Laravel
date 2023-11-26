@@ -39,7 +39,7 @@ class RecapEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'recampemail',
+            view: 'recapemail',
             with: ['postCount' => Post::count(), 'userCount' => User::count()]
         );
     }

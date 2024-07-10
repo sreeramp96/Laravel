@@ -2,6 +2,6 @@
 
 @section('content')
     
-    @include('form', ['task'=>$task] -> id)
+    @include('form', ['task'=>$task])
 
 @endsection

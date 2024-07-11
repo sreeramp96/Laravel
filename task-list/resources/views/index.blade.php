@@ -10,7 +10,7 @@
 
 @forelse ($tasks as $task)
 <div>
-    <a href="{{route('tasks.show',['task'=>$task->id])}}" @@class('p-4', 'font-bold' )>
+    <a href="{{route('tasks.show',['task'=>$task->id])}}" @class(['line-through'=> $task->completed])>
         {{$task->title}}
     </a>
 </div>

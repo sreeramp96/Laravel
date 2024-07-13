@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="mb-4">
-  <a href="{{route('tasks.index')}}" class="link">
+  <a href="{{route('tasks.index')}}" class="btn">
     ← Go back to the task list!</a>
 </div>
 

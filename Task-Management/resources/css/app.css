@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .btn {
-    @apply rounded-md px-2 py-1 text-center text-slate-700 font-medium shadow-sm ring-1 ring-slate-700/10 hover: bg-slate-50;
+    @apply rounded-md px-2 py-1 text-center text-slate-700 font-medium shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50;
 }
 
 .link {
@@ -16,7 +16,7 @@ label {
 
 input,
 textarea {
-    @apply shadow-sm appearance-none border w-full py-2 px-3 text-slate-700 leading-tight focus: outline-none;
+    @apply shadow-sm appearance-none border w-full py-2 px-3 text-slate-700 leading-tight focus:outline-none;
 }
 
 .error {

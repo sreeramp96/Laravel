@@ -4,7 +4,7 @@
 
 @section('content')
 <nav class="mb-4">
-    <a href="{{route('tasks.create')}}" class="link">
+    <a href="{{route('tasks.create')}}" class="btn">
         Add Task</a>
 </nav>
 

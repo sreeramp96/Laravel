@@ -11,7 +11,7 @@ Route::get('/', function () {
 
 Route::get('/tasks', function () {
     return view('index', [
-        'tasks' => Task::latest()->cursorPaginate(10)
+        'tasks' => Task::latest()->simplePaginate()
     ]);
 })->name('tasks.index');
 
@@ -31,13 +31,13 @@ Route::post('/tasks', function (TaskRequest $request) {
     // $task->title = $data['title'];
     // $task->description = $data['description'];
     // $task->long_description = $data['long_description'];
-    // $task->save();
+    // $task->save();%7Btask?task=15
     $task = Task::create($request->validated());
 
     return redirect()->route('tasks.show', ['task' => $task->id])->with('success', 'Task Created succesfully');
 })->name('tasks.store');
 
-Route::put('/tasks/{task', function (Task $task, TaskRequest $request) {
+Route::put('/tasks/{task}', function (Task $task, TaskRequest $request) {
     // $data = $request->validated();
     // $task->title = $data['title'];
     // $task->description = $data['description'];
@@ -58,3 +58,7 @@ Route::put('task/{task}/toggle-complete', function (Task $task) {
     $task->toggleComplete();
     return redirect()->back()->with('success', 'Task Updated succesfully');
 })->name('tasks.toggle-complete');
+
+Route::fallback(function () {
+    return 'Still got somewhere!';
+});

@@ -53,13 +53,18 @@ class BookController extends Controller
     public function show(int $id)
     {
         $cacheKey = 'book:' . $id;
-        $book = cache()->remember($cacheKey, 3600, fn() => Book::with(['reviews' => fn($query) => $query->Latest()])->withAvgRating()->withReviewsCount()->findOrFail($id));
+        $book = cache()->remember(
+            $cacheKey,
+            3600,
+            fn() => Book::with([
+                'reviews' => fn($query) => $query->Latest()
+            ])
+                ->withAvgRating()
+                ->withReviewsCount()
+                ->findOrFail($id)
+        );
         return view('books.show', ['book' => $book]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
